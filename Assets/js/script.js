@@ -44,7 +44,8 @@ function updateFutureForecast(forecastData) {
   let index = 0;
   $(".forecast-card").each(function () {
     let dayData = forecastData.daily[index];
-    console.log(dayData);
+    let imgCode = dayData.weather[0].icon;
+    let dayIcon = `http://openweathermap.org/img/wn/${imgCode}@2x.png`;
     let dayTemp = dayData.temp.day;
     let dayWind = dayData.wind_speed;
     let dayHumidity = dayData.humidity;
@@ -52,6 +53,7 @@ function updateFutureForecast(forecastData) {
     this.querySelector(".wind").textContent = "Wind: " + dayWind + " mph";
     this.querySelector(".humidity").textContent =
       "Humidity: " + dayHumidity + "%";
+    this.querySelector(".condition-image").setAttribute("src", dayIcon);
     index++;
   });
 }
@@ -60,7 +62,6 @@ function updateFutureForecast(forecastData) {
 $("#search-button").on("click", function (event) {
   event.preventDefault();
   let citySearched = $("#city-search").val();
-  console.log(citySearched);
   if (citySearched !== "") {
     cityData = getCityData(citySearched);
   }
