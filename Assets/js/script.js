@@ -18,7 +18,7 @@ function getCityData(city) {
 }
 
 function getForecast(lat, lon) {
-  let requestURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${APIkey}`;
+  let requestURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${APIkey}&units=imperial`;
   $.ajax({
     url: requestURL,
     method: "GET",
@@ -28,9 +28,32 @@ function getForecast(lat, lon) {
       return respone;
     })
     .then(function (data) {
-      //have to update current UVI with this call because info not included from other API
-      $("#uv-color").text(data.current.uvi);
+      updateFutureForecast(data);
     });
+}
+
+function updateCurrentForecast(city, cityData) {
+  $("#cur-city").text(city);
+  $("#cur-temp").text("Temp: " + cityData.main.temp + " F");
+  $("#cur-wind").text("Wind Speed: " + cityData.wind.speed + " mph");
+  $("#cur-humidity").text("Humidity: " + cityData.main.humidity + "%");
+}
+
+function updateFutureForecast(forecastData) {
+  $("#uv-color").text(forecastData.current.uvi);
+  let index = 0;
+  $(".forecast-card").each(function () {
+    let dayData = forecastData.daily[index];
+    console.log(dayData);
+    let dayTemp = dayData.temp.day;
+    let dayWind = dayData.wind_speed;
+    let dayHumidity = dayData.humidity;
+    this.querySelector(".temp").textContent = "Temp: " + dayTemp + " F";
+    this.querySelector(".wind").textContent = "Wind: " + dayWind + " mph";
+    this.querySelector(".humidity").textContent =
+      "Humidity: " + dayHumidity + "%";
+    index++;
+  });
 }
 
 //listens for submit click
@@ -42,10 +65,3 @@ $("#search-button").on("click", function (event) {
     cityData = getCityData(citySearched);
   }
 });
-
-function updateCurrentForecast(city, cityData) {
-  $("#cur-city").text(city);
-  $("#cur-temp").text("Temp: " + cityData.main.temp);
-  $("#cur-wind").text("Wind Speed: " + cityData.wind.speed + " mph");
-  $("#cur-humidity").text("Humidity: " + cityData.main.humidity + "%");
-}
