@@ -3,6 +3,9 @@
   --text-font: "Roboto", sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
 .container-fluid,
 .card {
   padding: 0;
