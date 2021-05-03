@@ -35,7 +35,96 @@
         </p>
       </div>
     </header>
-    <main></main>
+    <main>
+      <div class="row">
+        <!-- Structure for a boostrap form/card combination to accept user input -->
+        <div class="col-3 card h-50">
+          <div class="card-header">
+            <h2>Enter City</h2>
+          </div>
+          <form class="card-body">
+            <div class="mb-3 mt-2">
+              <input
+                type="text"
+                class="form-control"
+                id="city-search"
+                placeholder="Enter City"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary" id="search-button">
+              Submit
+            </button>
+          </form>
+        </div>
+        <!-- Structure for the current and 5 day forecast -->
+        <div class="col-9 d-flex flex-column">
+          <div class="current-conditions">
+            <h2 id="cur-city">City</h2>
+            <p id="cur-temp">Temp:</p>
+            <p id="cur-wind">Wind:</p>
+            <p id="cur-humidity">Humidity:</p>
+            <p id="uv-index">UV Index: <span id="uv-color"></span></p>
+          </div>
+          <div class="forecast-area d-flex flex-row justify-content-evenly">
+            <div class="card forecast-card">
+              <div class="card-header">
+                <h3>00/00/0000</h3>
+              </div>
+              <div class="card-body">
+                <p class="condition-image"></p>
+                <p class="temp">Temp:</p>
+                <p class="wind">Wind:</p>
+                <p class="humidity">Humidity:</p>
+              </div>
+            </div>
+            <div class="card forecast-card">
+              <div class="card-header">
+                <h3>00/00/0000</h3>
+              </div>
+              <div class="card-body">
+                <p class="condition-image"></p>
+                <p class="temp">Temp:</p>
+                <p class="wind">Wind:</p>
+                <p class="humidity">Humidity:</p>
+              </div>
+            </div>
+            <div class="card forecast-card">
+              <div class="card-header">
+                <h3>00/00/0000</h3>
+              </div>
+              <div class="card-body">
+                <p class="condition-image"></p>
+                <p class="temp">Temp:</p>
+                <p class="wind">Wind:</p>
+                <p class="humidity">Humidity:</p>
+              </div>
+            </div>
+            <div class="card forecast-card">
+              <div class="card-header">
+                <h3>00/00/0000</h3>
+              </div>
+              <div class="card-body">
+                <p class="condition-image"></p>
+                <p class="temp">Temp:</p>
+                <p class="wind">Wind:</p>
+                <p class="humidity">Humidity:</p>
+              </div>
+            </div>
+            <div class="card forecast-card">
+              <div class="card-header">
+                <h3>00/00/0000</h3>
+              </div>
+              <div class="card-body">
+                <p class="condition-image"></p>
+                <p class="temp">Temp:</p>
+                <p class="wind">Wind:</p>
+                <p class="humidity">Humidity:</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
     <!-- Script for bootstrap -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"

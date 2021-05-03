@@ -3,14 +3,26 @@
   --text-font: "Roboto", sans-serif;
 }
 
-.landing-zone {
-  margin: 20px 0;
+.container-fluid,
+.card {
+  padding: 0;
 }
 
-#page-title {
+.landing-zone {
+  margin: 20px 0;
+  border-bottom: 2px solid black;
+}
+
+#page-title,
+.card-header,
+#cur-city {
   font-family: var(--title-font);
 }
 
 #landing-text {
   font-family: var(--text-font);
+}
+
+.forecast-card {
+  width: 15%;
 }
