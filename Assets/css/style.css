@@ -1,0 +1,16 @@
+:root {
+  --title-font: "Poppins", sans-serif;
+  --text-font: "Roboto", sans-serif;
+}
+
+.landing-zone {
+  margin: 20px 0;
+}
+
+#page-title {
+  font-family: var(--title-font);
+}
+
+#landing-text {
+  font-family: var(--text-font);
+}
