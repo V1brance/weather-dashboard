@@ -40,8 +40,12 @@ function updateCurrentForecast(city, cityData) {
 function updateFutureForecast(forecastData) {
   $("#uv-color").text(forecastData.current.uvi);
   let index = 0;
+  let dateArray = setDates();
   $(".forecast-card").each(function () {
     let dayData = forecastData.daily[index];
+    let date = dateArray[index];
+    this.querySelector(".date").textContent =
+      date.substr(0, 2) + "/" + date.substr(2, 2) + "/" + date.substr(4, 4);
     let imgCode = dayData.weather[0].icon;
     let dayIcon = `http://openweathermap.org/img/wn/${imgCode}@2x.png`;
     let dayTemp = dayData.temp.day;
@@ -68,23 +72,49 @@ function saveHistory(city) {
     savedArray.pop();
   }
   localStorage.setItem("savedCities", JSON.stringify(savedArray));
-  populateList(savedArray);
+  populateList(savedArray, city);
 }
 
-function populateList(cityArray) {
+function populateList(cityArray, city) {
   let cityList = $(".history-list");
   let cityItems = document.querySelectorAll(".city-element");
   if (cityItems.length !== 0) {
     for (let i = 0; i < cityItems.length; i++) {
-      console.log(cityItems[i]);
       cityItems[i].remove();
     }
   }
   for (let i = 0; i < cityArray.length; i++) {
-    newElement = $("<li></li>").text(cityArray[i]);
-    newElement.attr("class", "city-element");
+    newElement = $("<button></button>").text(cityArray[i]);
+    newElement.attr(
+      "class",
+      "city-element list-group-item list-group-item-action"
+    );
+    if (cityArray[i] == city) {
+      newElement.attr(
+        "class",
+        "city-element list-group-item list-group-item-action active"
+      );
+    }
     cityList.append(newElement);
   }
+
+  $(".city-element").on("click", function (event) {
+    event.preventDefault();
+    selectedHistory = event.target;
+    let newCityData = getCityData(selectedHistory.textContent);
+    saveHistory(selectedHistory.textContent);
+  });
+}
+
+function setDates() {
+  let currentDate = moment();
+  let dateArray = [];
+
+  for (i = 0; i < 5; i++) {
+    dateArray.push(currentDate.format("MMDDYYYY"));
+    currentDate.add(1, "d");
+  }
+  return dateArray;
 }
 
 //listens for submit click
@@ -96,3 +126,14 @@ $("#search-button").on("click", function (event) {
     saveHistory(citySearched);
   }
 });
+
+let storedData = JSON.parse(localStorage.getItem("savedCities"));
+if (storedData === null) {
+  cityData = getCityData("New York City");
+  saveHistory("New York City");
+} else {
+  let lastSearch = storedData[0];
+  console.log(lastSearch);
+  cityData = getCityData(lastSearch);
+  saveHistory(lastSearch);
+}
