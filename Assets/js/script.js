@@ -39,6 +39,7 @@ function updateCurrentForecast(city, cityData) {
 
 function updateFutureForecast(forecastData) {
   $("#uv-color").text(forecastData.current.uvi);
+  setColor(forecastData.current.uvi);
   let index = 0;
   let dateArray = setDates();
   $(".forecast-card").each(function () {
@@ -117,6 +118,20 @@ function setDates() {
   return dateArray;
 }
 
+function setColor(uvi) {
+  let uvSpan = $("#uv-color");
+  console.log(uvi);
+  if (uvi < 3) {
+    uvSpan.attr("style", "background-color: lightgreen; border-radius: 5px");
+  } else if (uvi >= 3 && uvi < 6) {
+    uvSpan.attr("style", "background-color: yellow; border-radius: 5px");
+  } else if (uvi >= 6 && uvi < 8) {
+    uvSpan.attr("style", "background-color: orange; border-radius: 5px");
+  } else if (uvi >= 8) {
+    uvSpan.attr("style", "background-color: red; border-radius: 5px");
+  }
+}
+
 //listens for submit click
 $("#search-button").on("click", function (event) {
   event.preventDefault();
@@ -133,7 +148,6 @@ if (storedData === null) {
   saveHistory("New York City");
 } else {
   let lastSearch = storedData[0];
-  console.log(lastSearch);
   cityData = getCityData(lastSearch);
   saveHistory(lastSearch);
 }
