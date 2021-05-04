@@ -8,7 +8,6 @@ function getCityData(city) {
     method: "GET",
   })
     .then(function (response) {
-      console.log(response);
       return response;
     })
     .then(function (data) {
@@ -24,7 +23,6 @@ function getForecast(lat, lon) {
     method: "GET",
   })
     .then(function (respone) {
-      console.log(respone);
       return respone;
     })
     .then(function (data) {
@@ -58,11 +56,43 @@ function updateFutureForecast(forecastData) {
   });
 }
 
+function saveHistory(city) {
+  let savedArray = JSON.parse(localStorage.getItem("savedCities"));
+  if (savedArray === null) {
+    savedArray = [];
+  }
+  if (!savedArray.includes(city)) {
+    savedArray.unshift(city);
+  }
+  if (savedArray.length == 6) {
+    savedArray.pop();
+  }
+  localStorage.setItem("savedCities", JSON.stringify(savedArray));
+  populateList(savedArray);
+}
+
+function populateList(cityArray) {
+  let cityList = $(".history-list");
+  let cityItems = document.querySelectorAll(".city-element");
+  if (cityItems.length !== 0) {
+    for (let i = 0; i < cityItems.length; i++) {
+      console.log(cityItems[i]);
+      cityItems[i].remove();
+    }
+  }
+  for (let i = 0; i < cityArray.length; i++) {
+    newElement = $("<li></li>").text(cityArray[i]);
+    newElement.attr("class", "city-element");
+    cityList.append(newElement);
+  }
+}
+
 //listens for submit click
 $("#search-button").on("click", function (event) {
   event.preventDefault();
   let citySearched = $("#city-search").val();
   if (citySearched !== "") {
     cityData = getCityData(citySearched);
+    saveHistory(citySearched);
   }
 });
